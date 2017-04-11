@@ -4,9 +4,9 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    receiver.cpp \
-    sendtoservice.cpp \
-    audio.cpp
+    receivefromhmi.cpp \
+    receivefromappmain.cpp \
+    sendtoappmain.cpp
 
 RESOURCES += qml.qrc
 
@@ -77,6 +77,6 @@ DISTFILES += \
     imageaudio/qt-logo.ico
 
 HEADERS += \
-    receiver.h \
-    sendtoservice.h \
-    audio.h
+    receivefromhmi.h \
+    receivefromappmain.h \
+    sendtoappmain.h

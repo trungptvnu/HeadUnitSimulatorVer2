@@ -1,19 +1,19 @@
 #include <QBuffer>
-#include "sendtoservice.h"
+#include "sendtoappmain.h"
 #include <QtCore/QDebug>
 #include<QObject>
 #include <QDataStream>
-#include "receiver.h"
+#include "receivefromhmi.h"
 #include "audiocontroller.h"
 
 
-SendToService::SendToService()
+SendToAppMain::SendToAppMain()
 {
 
 }
 
 
-void SendToService::loadToShareMemory()
+void SendToAppMain::loadToSharedMemory()
 {
 
     sharedMemory.setKey("server");

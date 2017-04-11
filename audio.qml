@@ -14,8 +14,6 @@ Rectangle
     height: 480
     visible: true
 
-
-
     Image {
         id: img
         width: item.width
@@ -120,10 +118,18 @@ Rectangle
                     anchors.fill: parent
                     onClicked:
                     {
-                        receiver.play("play");
+                        receiveFromHMI.play("play");
                     }
 
                 }
+//                Connections
+//                {
+//                    target: receiveFromAppMain
+//                    onMusicPlayedEvent:
+//                    {
+//                        console.log("dang choi nhac ")
+//                    }
+//                }
 
             }
             ToolButton

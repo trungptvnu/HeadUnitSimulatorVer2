@@ -3,15 +3,16 @@
 
 #include <QObject>
 #include <QSharedMemory>
-#include "receiver.h"
+#include "receivefromhmi.h"
 
-class SendToService: public QObject
+class SendToAppMain: public QObject
 {
     Q_OBJECT
 public:
-    SendToService();
+    SendToAppMain();
+
 public slots:
-    void loadToShareMemory();
+    void loadToSharedMemory();
 
 private:
     QSharedMemory sharedMemory;

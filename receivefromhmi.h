@@ -8,15 +8,16 @@
 #include <QWidgetList>
 #include <QThread>
 
-class ReceiverFromQML : public QThread
+class ReceiveFromHMI : public QThread
 {
     Q_OBJECT
 
 public:
-    ReceiverFromQML();
-    virtual ~ReceiverFromQML();
+    ReceiveFromHMI();
+    virtual ~ReceiveFromHMI();
 
    Q_INVOKABLE void play(QString );
+
 signals:
     void playMusic();
 

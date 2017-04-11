@@ -12,8 +12,9 @@
 #include <QQuickView>
 
 #include "audio.h"
-#include "receiver.h"
-#include"sendtoservice.h"
+#include "receivefromhmi.h"
+#include"sendtoappmain.h"
+#include "receivefromappmain.h"
 
 
 int main(int argc, char *argv[])
@@ -22,20 +23,19 @@ int main(int argc, char *argv[])
 
 
     QQuickView view;
+     ReceiveFromHMI receiveFromHMI;
+    ReceiveFromAppMain receiveFromAppMain;
+
+    view.rootContext()->setContextProperty("receiveFromHMI",&receiveFromHMI);
+    view.rootContext()->setContextProperty("receiveFromAppMain",&receiveFromAppMain);
     view.setSource(QUrl("qrc:/main.qml"));
-    ReceiverFromQML receiverfromQML;
-    view.rootContext()->setContextProperty("receiver",&receiverfromQML);
+    view.setSource(QUrl("qrc:/audio.qml"));
 
-   // Audio _audio;
+    receiveFromAppMain.loadFromMemory();
 
-    SendToService sendtoservice;
+    SendToAppMain sendToAppMain;
 
-   QObject::connect(&receiverfromQML, ReceiverFromQML::playMusic, &sendtoservice, SendToService::loadToShareMemory);
-
-
-
-
-
+   QObject::connect(&receiveFromHMI, ReceiveFromHMI::playMusic, &sendToAppMain, SendToAppMain::loadToSharedMemory);
 
     return app.exec();
 }
