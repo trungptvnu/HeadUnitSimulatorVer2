@@ -15,7 +15,7 @@
 #include "receivefromhmi.h"
 #include"sendtoappmain.h"
 #include "receivefromappmain.h"
-
+#include "thread.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,13 +29,13 @@ int main(int argc, char *argv[])
     view.rootContext()->setContextProperty("receiveFromHMI",&receiveFromHMI);
     view.rootContext()->setContextProperty("receiveFromAppMain",&receiveFromAppMain);
     view.setSource(QUrl("qrc:/main.qml"));
-    view.setSource(QUrl("qrc:/audio.qml"));
 
-    receiveFromAppMain.loadFromMemory();
+   Thread thread;
+   thread.start();
 
     SendToAppMain sendToAppMain;
 
-   QObject::connect(&receiveFromHMI, ReceiveFromHMI::playMusic, &sendToAppMain, SendToAppMain::loadToSharedMemory);
+   QObject::connect(&receiveFromHMI, ReceiveFromHMI::playMusic, &sendToAppMain, SendToAppMain::writeSharedMemory);
 
     return app.exec();
 }

@@ -12,7 +12,7 @@ public:
     SendToAppMain();
 
 public slots:
-    void loadToSharedMemory();
+    void writeSharedMemory();
 
 private:
     QSharedMemory sharedMemory;

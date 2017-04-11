@@ -4,22 +4,25 @@
 #include <QObject>
 #include <QSharedMemory>
 #include <QThread>
+#include <QTimer>
 
-class ReceiveFromAppMain :public QThread
+class ReceiveFromAppMain :public QObject
 {
     Q_OBJECT
 
 
 public:
     ReceiveFromAppMain();
-    void loadFromMemory();
-    void runCheckMemory();
+
+
 
 signals:
     void musicPlayedEvent();
+public slots:
+     void readSharedMemory();
 
  private:
-    QThread workerThread;
+    QTimer timer;
     QSharedMemory sharedMemory;
 };
 

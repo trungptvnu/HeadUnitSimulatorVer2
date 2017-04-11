@@ -4,7 +4,6 @@
 #include<QObject>
 #include <QDataStream>
 #include "receivefromhmi.h"
-#include "audiocontroller.h"
 
 
 SendToAppMain::SendToAppMain()
@@ -13,7 +12,7 @@ SendToAppMain::SendToAppMain()
 }
 
 
-void SendToAppMain::loadToSharedMemory()
+void SendToAppMain::writeSharedMemory()
 {
 
     sharedMemory.setKey("server");

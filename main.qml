@@ -1,6 +1,18 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.2
+import QtQuick.Layouts 1.0
+import QtQuick.Dialogs 1.0
+import QtMultimedia 5.0
+import QtQuick.Controls 2.0
+import QtQuick 2.1
+import QtQuick.Window 2.1
+import QtQuick.Layouts 1.0
+import QtQuick.Controls 1.0
+import QtQuick.Dialogs 1.0
+import QtMultimedia 5.0
+
+
+
 
 Window
 {
@@ -8,13 +20,352 @@ Window
     visible: true
     width: 640
     height: 580
-    title: qsTr("PHONE")
-// main frame
-    Loader
+    title: qsTr("Head Unit Simulator")
+
+// Setting Rectangle
+    Rectangle
     {
-        id: loader
-        focus: true
+
+        id: setting
+        width: 640
+        height: 480
+        visible: false
+        color : "orange"
+        Image
+        {
+            width: setting.width
+            height: setting.height
+            source: "qrc:/imagebackgroud/background.jpg"
+        }
+
     }
+
+    // phonebook Rectangle
+    Rectangle
+    {
+
+        id: phonebook
+        width: 640
+        height: 480
+        visible: false
+        color : "blue"
+        Image
+        {
+            id: img
+            width: phonebook.width
+            height: phonebook.height
+            source: "qrc:/imagebackgroud/background.jpg"
+        }
+       TabBar
+        {
+            id: tabBar
+            TabButton
+            {
+                text: qsTr("Phone List")
+            }
+            TabButton
+            {
+                text: qsTr("Recent Call")
+            }
+            TabButton
+            {
+                text: qsTr("Favorite Phone Number")
+            }
+
+        }
+
+    }
+
+    // Audio Rectangle
+    Rectangle
+    {
+        id: audio
+        objectName: "item"
+        width: 640
+        height: 480
+        visible: false
+        color: "red"
+
+        Image {
+
+            width: audio.width
+            height: audio.height
+            source: "qrc:/imagebackgroud/background.jpg"
+        }
+        ColumnLayout
+        {
+            id: column
+            objectName: "column"
+            anchors.margins: 9
+            anchors.fill: parent
+
+            Label
+            {
+                id: infoLabel
+
+                elide: Qt.ElideLeft
+                verticalAlignment: Qt.AlignCenter
+                Layout.minimumHeight: infoLabel.implicitHeight
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+            }
+            RowLayout
+            {
+                id: row
+                objectName: "row"
+
+                ToolButton
+                {
+
+                }
+                ToolButton
+                {
+
+                }
+
+                ToolButton
+                {
+
+                }
+
+                ToolButton
+                {
+                    id: previousButon
+                    tooltip: qsTr("previous")
+                    iconSource: "qrc:/imageaudio/previous-32.png"
+                    onClicked:
+                    {
+                        audioController.previous()
+                        console.log("previous")
+                    }
+
+                }
+                ToolButton
+                {
+                    id: seekButton
+                    objectName: "playPauseButton"
+                    Layout.preferredWidth: playPauseButton.implicitHeight
+                    iconSource: "qrc:/imageaudio/media-seek-forward-32.png"
+                    visible: false
+
+                }
+                ToolButton
+                {
+
+                }
+
+                ToolButton
+                {
+                    id: playPauseButton
+                    objectName: "playPauseButton"
+                    Layout.preferredWidth: playPauseButton.implicitHeight
+                    iconSource: "qrc:/imageaudio/media-play-32.png"
+                    MouseArea
+                    {
+                        id: mouseArea
+                        anchors.fill: parent
+                        onClicked:
+                        {
+                            receiveFromHMI.play("play");
+                            console.log("playmusicClicked")
+                           // seekButton.visible =! seekButton.visible
+
+                        }
+
+                    }
+                    Connections
+                    {
+                        target: receiveFromAppMain
+                        onMusicPlayedEvent:
+                        {
+
+                            console.log("dang choi nhac ")
+                            seekButton.visible =! seekButton.visible
+                        }
+                    }
+                }
+                ToolButton
+                {
+
+                }
+                ToolButton
+                {
+
+                }
+
+                ToolButton
+                {
+                    id: stopButton
+                    Layout.preferredWidth: stopButton.implicitHeight
+                    iconSource: "qrc:/imageaudio/media-stop-32.png"
+                    onClicked:
+                    {
+                        audioController.stop()
+                        console.log("Stop")
+                    }
+                }
+                ToolButton
+                {
+
+                }
+                ToolButton
+                {
+
+                }
+
+                ToolButton
+                {
+                    tooltip: qsTr("Next")
+                    iconSource: "qrc:/imageaudio/next-32.png"
+                    onClicked:
+                    {
+                        audioController.next()
+                        console.log("next")
+                    }
+                }
+
+
+            }
+            RowLayout
+            {
+                id: rowLayout2
+                Slider
+                {
+                    id: positionSlider
+                    Layout.minimumWidth: 75
+                    Layout.fillWidth: true
+
+                }
+            }
+
+            ColumnLayout
+            {
+                id: playlist
+
+                ScrollView
+                {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    flickableItem.interactive: true
+
+                    ListView
+                    {
+                        id: playlistView
+                        anchors.fill: parent
+                        model: playlistModel
+                        delegate: playlistDelegate
+    //                    delegate: PlaylistDelegate {  }
+                        highlight: playlistHighlight
+                    }
+                }
+                RowLayout
+                {
+                    ToolButton
+                    {
+                        text: qsTr("Add music files")
+                        iconSource: "qrc:/imageaudio/plus-32.png"
+                        onClicked: addingMusicDialog.open()
+
+                        FileDialog
+                        {
+                            id: addingMusicDialog
+                            //folder : musicUrl
+                            title: qsTr("Open audio files")
+                            nameFilters: [qsTr("MP3 files (*.mp3)"), qsTr("All files (*.*)")]
+                            selectMultiple: true
+                            onAccepted:
+                            {
+                                var file_protocol = "file:///"
+                                for (var i = 0; i < fileUrls.length; i++)
+                                {
+                                    var path = fileUrls[i].toString()
+                                    path = path.substring(file_protocol.length, path.length)
+                                    playlistModel.append( { "path" : path, } )
+                                }
+                            }
+                        }
+                    }
+
+                }
+                Component
+                {
+                    id: playlistDelegate
+
+                    Item
+                    {
+                        width: parent.width
+                        height: 30
+
+                        Rectangle
+                        {
+                            id : rectItem
+                            anchors.fill: parent
+                            color: "#33000000"
+                            radius: 5
+                            visible: mouse.pressed
+                        }
+
+                        Text {
+                            x: 10
+                            y: 10
+                            text: path
+                        }
+
+                        MouseArea
+                        {
+                            id: mouse
+                            anchors.fill: parent
+                            onClicked: playlistView.currentIndex = index
+                            onDoubleClicked: mediaPlayer.source = path
+                        }
+                    }
+                }
+                Component
+                {
+                    id: playlistHighlight
+                    Rectangle
+                    {
+                        color: "gray"
+                        radius: 5
+                        y: playlistView.currentItem.y
+                        Behavior on y
+                        {
+                            SpringAnimation
+                            {
+                                spring: 3
+                                damping: 0.2
+                            }
+                        }
+                    }
+                }
+                ListModel
+                {
+                    id: playlistModel
+                }
+            }
+
+        }
+
+    }
+
+    //Climate Rectangle
+    Rectangle
+    {
+        id: climate
+        width: 640
+        height: 480
+        visible: false
+        color : "green"
+        Image {
+            width: climate.width
+            height: climate.height
+            source: "qrc:/imagebackgroud/background.jpg"
+        }
+
+    }
+
+    // Audio Rectangle
 
     Rectangle
     {
@@ -28,6 +379,8 @@ Window
             width : 640
             height: 480
             source : "qrc:/imagebackgroud/background.jpg"
+
+            //Text icon
             // phone
             Text
             {
@@ -75,21 +428,16 @@ Window
             }
         }
 
-
+        //Icon Image
         // Phonebook
         Image
         {
-            id : phonebook
+            id : iphonebook
             x:80
             y:180
             width : 100
             height : 100
             source : "qrc:/imagebackgroud/phonebook.png"
-            Loader
-            {
-                id: loaderPhonebook
-                focus: true
-            }
             MouseArea
             {
                 id: areaPhonebook
@@ -98,7 +446,7 @@ Window
 
                 onClicked:
                 {
-                    loader.setSource("qrc:/phonebook.qml")
+                    phonebook.visible =! phonebook.visible
                    root.visible =! root.visible
                 }
 
@@ -109,27 +457,20 @@ Window
         // Audio
         Image
         {
-            id: audio
+            id: iaudio
             x: 200
             y: 180
             width : 100
             height : 100
             source: "qrc:/imagebackgroud/music.png"
-            Loader
-            {
-                id: loaderImage
-                focus: true
-            }
             MouseArea
             {
                 id:areaAudio
-                width : setting.width
-                height: setting.height
                 anchors.fill: parent
 
                 onClicked:
                 {
-                    loader.source = "qrc:/audio.qml"
+                    audio.visible =! audio.visible
                     root.visible =! root.visible
 
                 }
@@ -139,27 +480,20 @@ Window
         // Setting
         Image
         {
-            id : setting
+            id : isetting
             x:320
             y:180
             width : 100
             height : 100
             source : "qrc:/imagebackgroud/setting.png"
-            Loader
-            {
-                id: loaderSetting
-                focus: true
-            }
 
             MouseArea
             {
                 id:areaSetting
-
-                width : setting.width
-                height: setting.height
+                anchors.fill: parent
                 onClicked:
                 {
-                    loader.setSource("qrc:/setting.qml")
+                    setting.visible =! setting.visible
                     root.visible =! root.visible
                 }
 
@@ -168,26 +502,20 @@ Window
         //Climate
         Image
         {
-            id : climate
+            id : iclimate
             x:440
             y:180
             width : 100
             height : 100
             source : "qrc:/imagebackgroud/climate.png"
-            Loader
-            {
-                id: loaderClimate
-                focus: true
-            }
 
             MouseArea
             {
                 id:areaCimate
-                width : setting.width
-                height: setting.height
+                anchors.fill: parent
                 onClicked:
                 {
-                    loader.setSource("qrc:/climate.qml")
+                    climate.visible =! climate.visible
                     root.visible =! root.visible
 
                 }

@@ -6,7 +6,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     receivefromhmi.cpp \
     receivefromappmain.cpp \
-    sendtoappmain.cpp
+    sendtoappmain.cpp \
+    thread.cpp
 
 RESOURCES += qml.qrc
 
@@ -79,4 +80,5 @@ DISTFILES += \
 HEADERS += \
     receivefromhmi.h \
     receivefromappmain.h \
-    sendtoappmain.h
+    sendtoappmain.h \
+    thread.h

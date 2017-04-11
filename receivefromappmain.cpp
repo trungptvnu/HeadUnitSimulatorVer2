@@ -7,7 +7,7 @@ ReceiveFromAppMain::ReceiveFromAppMain()
 {
 
 }
-void ReceiveFromAppMain::loadFromMemory()
+void ReceiveFromAppMain::readSharedMemory()
 {
     sharedMemory.setKey("server 1");
     if (!sharedMemory.attach())
@@ -31,14 +31,4 @@ void ReceiveFromAppMain::loadFromMemory()
      }
 }
 
-void ReceiveFromAppMain::runCheckMemory()
-{
-    ReceiveFromAppMain *receiveFromAppMain = new ReceiveFromAppMain;
-    receiveFromAppMain->moveToThread(& workerThread);
-    workerThread.start();
-    while(true)
-    {
-        receiveFromAppMain->loadFromMemory();
-        sleep(1);
-    }
-}
+

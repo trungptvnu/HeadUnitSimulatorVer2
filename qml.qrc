@@ -1,10 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>audio.qml</file>
-        <file>climate.qml</file>
-        <file>phonebook.qml</file>
-        <file>setting.qml</file>
         <file>imageaudio/audioplayer.ico</file>
         <file>imageaudio/audioplayer.png</file>
         <file>imageaudio/cross-16.png</file>
@@ -47,8 +43,6 @@
         <file>imagebackgroud/music.png</file>
         <file>imagebackgroud/phonebook.png</file>
         <file>imagebackgroud/setting.png</file>
-        <file>audiocontroller.cpp</file>
-        <file>audiocontroller.h</file>
         <file>main.cpp</file>
         <file>imageaudio/backgroud.png</file>
         <file>imagebackgroud/index.jpg</file>
