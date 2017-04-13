@@ -187,7 +187,7 @@ Window
                         {
 
                             console.log("dang choi nhac ")
-                            seekButton.visible =! seekButton.visible
+                           // seekButton.visible =! seekButton.visible
                         }
                     }
                 }
