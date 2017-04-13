@@ -2,7 +2,7 @@
 #define AUDIO_H
 
 #include <QObject>
-#include "receivefromhmi.h"
+#include "hmieventcontroller.h"
 
 class Audio
 {

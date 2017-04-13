@@ -9,7 +9,7 @@ ReceiveFromAppMain::ReceiveFromAppMain()
 }
 void ReceiveFromAppMain::readSharedMemory()
 {
-    sharedMemory.setKey("server 1");
+    sharedMemory.setKey("server1");
     if (!sharedMemory.attach())
     {
         return ;
@@ -28,6 +28,7 @@ void ReceiveFromAppMain::readSharedMemory()
      if (string=="Hi")
      {
          emit musicPlayedEvent();
+         qDebug()   << "dang choi nhac";
      }
 }
 

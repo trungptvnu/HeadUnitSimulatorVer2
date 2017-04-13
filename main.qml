@@ -23,6 +23,12 @@ Window
     title: qsTr("Head Unit Simulator")
 
 // Setting Rectangle
+    Loader
+    {
+        id: loader
+        focus: true
+    }
+// background
     Rectangle
     {
 
@@ -167,17 +173,17 @@ Window
                         anchors.fill: parent
                         onClicked:
                         {
-                            receiveFromHMI.play("play");
+                           hMIEventController.HMIEvent("play")
                             console.log("playmusicClicked")
                            // seekButton.visible =! seekButton.visible
-
                         }
 
                     }
+
                     Connections
                     {
-                        target: receiveFromAppMain
-                        onMusicPlayedEvent:
+                        target: hMIEventController
+                        onMusicIsPlayed:
                         {
 
                             console.log("dang choi nhac ")
@@ -201,8 +207,9 @@ Window
                     iconSource: "qrc:/imageaudio/media-stop-32.png"
                     onClicked:
                     {
-                        audioController.stop()
-                        console.log("Stop")
+                        hMIEventController.HMIEvent("stop")
+
+                        console.log("StopMusicClicked")
                     }
                 }
                 ToolButton
@@ -389,7 +396,7 @@ Window
                 width: 131
                 height: 41
                 color: "black"
-                text: 'Contacts'
+                text: 'Phone'
                 font.family: "Nirmala UI"
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize :30
@@ -437,7 +444,7 @@ Window
             y:180
             width : 100
             height : 100
-            source : "qrc:/imagebackgroud/phonebook.png"
+            source : "qrc:/imagebackgroud/call.png"
             MouseArea
             {
                 id: areaPhonebook
@@ -533,17 +540,18 @@ Window
         height: 100
         Image {
             id: image
-            source: "qrc:/imagebackgroud/background.jpg"
+            source: "qrc:/imagebackgroud/toolbar.jpg"
             width: toolbar.width
             height: toolbar.height
         }
+        // khu vuc date and time
+
         Label
         {
             id: clockLabel
-            anchors.top: parent.top
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            font.pixelSize: 30
+
+            font.pixelSize: 32
             Timer
             {
                 id: clockTimer
@@ -552,8 +560,16 @@ Window
                 running: visible
                 onTriggered: clockLabel.text = Qt.formatDateTime(new(Date),"hh:mm:ss")
             }
-
         }
+        Text
+            {
+                id : date
+               anchors.bottom: parent.bottom
+               anchors.right: parent.right
+                text: Qt.formatDateTime(new Date(), "dd/MM/yyyy")
+                horizontalAlignment: Text.AlignHCenter
+                font.pointSize: 23
+            }
         ToolButton
         {
             id: homeButton

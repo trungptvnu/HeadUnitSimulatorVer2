@@ -4,10 +4,10 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    receivefromhmi.cpp \
     receivefromappmain.cpp \
     sendtoappmain.cpp \
-    thread.cpp
+    thread.cpp \
+    hmieventcontroller.cpp
 
 RESOURCES += qml.qrc
 
@@ -78,7 +78,7 @@ DISTFILES += \
     imageaudio/qt-logo.ico
 
 HEADERS += \
-    receivefromhmi.h \
     receivefromappmain.h \
     sendtoappmain.h \
-    thread.h
+    thread.h \
+    hmieventcontroller.h

@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QSharedMemory>
-#include "receivefromhmi.h"
+#include "hmieventcontroller.h"
 
 class SendToAppMain: public QObject
 {

@@ -34,12 +34,9 @@
         <file>imageaudio/previous-16.png</file>
         <file>imageaudio/previous-32.png</file>
         <file>imageaudio/qt-logo.ico</file>
-        <file>imagebackgroud/back.png</file>
-        <file>imagebackgroud/background.jpg</file>
         <file>imagebackgroud/background.png</file>
         <file>imagebackgroud/call.png</file>
         <file>imagebackgroud/climate.png</file>
-        <file>imagebackgroud/contacts.png</file>
         <file>imagebackgroud/music.png</file>
         <file>imagebackgroud/phonebook.png</file>
         <file>imagebackgroud/setting.png</file>
@@ -47,7 +44,8 @@
         <file>imageaudio/backgroud.png</file>
         <file>imagebackgroud/index.jpg</file>
         <file>imageaudio/Home-32.png</file>
-        <file>imagebackgroud/Home-528.png</file>
         <file>imagebackgroud/Home-96.png</file>
+        <file>imagebackgroud/background.jpg</file>
+        <file>imagebackgroud/toolbar.jpg</file>
     </qresource>
 </RCC>

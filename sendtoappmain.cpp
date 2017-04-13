@@ -3,7 +3,7 @@
 #include <QtCore/QDebug>
 #include<QObject>
 #include <QDataStream>
-#include "receivefromhmi.h"
+#include "hmieventcontroller.h"
 
 
 SendToAppMain::SendToAppMain()

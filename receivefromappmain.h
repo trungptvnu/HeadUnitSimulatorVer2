@@ -15,14 +15,14 @@ public:
     ReceiveFromAppMain();
 
 
-
 signals:
     void musicPlayedEvent();
+
 public slots:
      void readSharedMemory();
 
  private:
-    QTimer timer;
+
     QSharedMemory sharedMemory;
 };
 
