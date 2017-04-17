@@ -47,5 +47,9 @@
         <file>imagebackgroud/Home-96.png</file>
         <file>imagebackgroud/background.jpg</file>
         <file>imagebackgroud/toolbar.jpg</file>
+        <file>script/weather.js</file>
+        <file>PageClimate.qml</file>
+        <file>imageweather/night.jpg</file>
+        <file>imageweather/search.png</file>
     </qresource>
 </RCC>

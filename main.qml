@@ -10,7 +10,10 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.0
 import QtQuick.Dialogs 1.0
 import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.1
 
+import"script/weather.js" as Weather
 
 
 
@@ -364,10 +367,29 @@ Window
         height: 480
         visible: false
         color : "green"
-        Image {
+        Image
+        {
             width: climate.width
             height: climate.height
             source: "qrc:/imagebackgroud/background.jpg"
+        }
+        Component.onCompleted:
+        {
+            Weather.setCityName("Hanoi")
+            Weather.parseJSON()
+            Weather.parseJSON5Days()
+        }
+        SwipeView
+        {
+            id: swipeView
+            currentIndex: 0
+            anchors.fill: parent
+
+            PageClimate
+            {
+                id: pageClimate
+            }
+
         }
 
     }
@@ -580,6 +602,17 @@ Window
                 window.visible =! window.visible
             }
         }
+        Label
+        {
+            PageClimate
+            {
+
+            }
+
+
+        }
+
+
 
     }
 
