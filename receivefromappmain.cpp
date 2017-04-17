@@ -1,11 +1,22 @@
 #include "receivefromappmain.h"
+#include "hmieventcontroller.h"
 #include<QBuffer>
 #include<QtCore/QDebug>
 #include<QDataStream>
+#include <Qtimer>
+#include<QThread>
 
 ReceiveFromAppMain::ReceiveFromAppMain()
 {
 
+}
+
+ReceiveFromAppMain::~ReceiveFromAppMain()
+{
+    mutex.lock();
+    condition.wakeOne();
+    mutex.unlock();
+    wait();
 }
 void ReceiveFromAppMain::readSharedMemory()
 {
@@ -14,7 +25,6 @@ void ReceiveFromAppMain::readSharedMemory()
     {
         return ;
     }
-
     QBuffer buffer;
     QDataStream in(&buffer);
     QString string;
@@ -27,9 +37,22 @@ void ReceiveFromAppMain::readSharedMemory()
 
      if (string=="Hi")
      {
-         emit musicPlayedEvent();
+         //comunication thread
+         emit musicIsPlayed();
          qDebug()   << "dang choi nhac";
      }
+     buffer.close();
 }
+void ReceiveFromAppMain::run()
+{
+
+
+   while(1)
+    {
+      this ->readSharedMemory();
+       sleep(1);
+   }
+}
+
 
 

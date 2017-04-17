@@ -31,7 +31,6 @@ Window
         id: loader
         focus: true
     }
-// background
     Rectangle
     {
 
@@ -176,7 +175,7 @@ Window
                         anchors.fill: parent
                         onClicked:
                         {
-                           hMIEventController.HMIEvent("play")
+                           hmiEventController.HMIEvent("play")
                             console.log("playmusicClicked")
                            // seekButton.visible =! seekButton.visible
                         }
@@ -185,12 +184,12 @@ Window
 
                     Connections
                     {
-                        target: hMIEventController
-                        onMusicIsPlayed:
+                        target: hmiEventController
+                        onPlayed:
                         {
 
                             console.log("dang choi nhac ")
-                           // seekButton.visible =! seekButton.visible
+                            seekButton.visible =! seekButton.visible
                         }
                     }
                 }
@@ -394,7 +393,7 @@ Window
 
     }
 
-    // Audio Rectangle
+    // Root Rectangle
 
     Rectangle
     {
@@ -604,16 +603,9 @@ Window
         }
         Label
         {
-            PageClimate
-            {
-
-            }
 
 
         }
-
-
-
     }
 
 }

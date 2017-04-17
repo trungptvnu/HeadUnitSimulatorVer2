@@ -5,23 +5,28 @@
 #include <QSharedMemory>
 #include <QThread>
 #include <QTimer>
+#include <QMutex>
+#include <QWaitCondition>
 
-class ReceiveFromAppMain :public QObject
+class ReceiveFromAppMain :public QThread
 {
     Q_OBJECT
 
 
 public:
     ReceiveFromAppMain();
+    ~ReceiveFromAppMain();
+    void run() override;
+    void readSharedMemory();
 
-
+//comunication
 signals:
-    void musicPlayedEvent();
-
-public slots:
-     void readSharedMemory();
+    void musicIsPlayed();
 
  private:
+
+     QMutex mutex;
+     QWaitCondition condition;
 
     QSharedMemory sharedMemory;
 };

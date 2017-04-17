@@ -10,6 +10,8 @@
 #include <QObject>
 #include <QQmlContext>
 #include <QQuickView>
+#include <QtConcurrent/QtConcurrent>
+#include <QThread>
 
 #include "audio.h"
 #include "hmieventcontroller.h"
@@ -23,21 +25,24 @@ int main(int argc, char *argv[])
 
 
     QQuickView view;
-     HMIEventController hMIEventController;
-    ReceiveFromAppMain receiveFromAppMain;
-
-    view.rootContext()->setContextProperty("hMIEventController",&hMIEventController);
-    view.rootContext()->setContextProperty("receiveFromAppMain",&receiveFromAppMain);
-    view.setSource(QUrl("qrc:/main.qml"));
-
-
-   Thread thread;
-   thread.start();
-
     SendToAppMain sendToAppMain;
+    HMIEventController hmiEventController;
+    //HMIEventController hMIEventController2;
 
-   QObject::connect(&hMIEventController, HMIEventController::playMusic, &sendToAppMain, SendToAppMain::writeSharedMemory);
-   QObject::connect(&receiveFromAppMain,ReceiveFromAppMain::musicPlayedEvent,&hMIEventController,HMIEventController::playedMusic);
 
-   return app.exec();
+    view.rootContext()->setContextProperty("hmiEventController",&hmiEventController);
+    //view.rootContext()->setContextProperty("hMIEventController2",&hMIEventController2);
+    view.setSource(QUrl("qrc:/main.qml"));
+ // ket noi gui di
+
+    QObject::connect(&hmiEventController, HMIEventController::playMusic, &sendToAppMain, SendToAppMain::writeSharedMemory);
+
+
+  // ket noi gui ve
+
+    ReceiveFromAppMain receiveFromAppMain;
+    QObject::connect(&receiveFromAppMain,ReceiveFromAppMain::musicIsPlayed,&hmiEventController,HMIEventController::MusicSlot);
+    QObject::connect(&receiveFromAppMain,QThread::finished,&hmiEventController,QObject::deleteLater);
+    receiveFromAppMain.start();
+    return app.exec();
 }

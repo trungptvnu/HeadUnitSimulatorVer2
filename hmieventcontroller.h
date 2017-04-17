@@ -8,7 +8,7 @@
 #include <QWidgetList>
 #include <QThread>
 
-class HMIEventController : public QThread
+class HMIEventController : public QObject
 {
     Q_OBJECT
 
@@ -22,11 +22,12 @@ public:
 signals:
     void playMusic();
     void stopMusic();
-    void musicIsPlayed();
+    void played();
 public slots:
-   void playedMusic()
+   void MusicSlot()
     {
-        emit musicIsPlayed();
+        emit played();
+        qDebug()<<"da ket noi";
     }
 
 };

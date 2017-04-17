@@ -1,11 +1,11 @@
 #include "hmieventcontroller.h"
 #include "audio.h"
+#include "receivefromappmain.h"
 #include <QDebug>
 
 
 HMIEventController::HMIEventController()
 {
-
 }
 
 HMIEventController::~HMIEventController()

@@ -35,4 +35,5 @@ void SendToAppMain::writeSharedMemory()
     const char *from = buffer.data().data();
     memcpy(to, from, qMin(sharedMemory.size(), size));
     sharedMemory.unlock();
+    buffer.close();
 }
