@@ -43,7 +43,7 @@ Window
         {
             width: setting.width
             height: setting.height
-            source: "qrc:/imagebackgroud/background.jpg"
+            source: "qrc:/imagebackgroud/index.jpg"
         }
 
     }
@@ -62,7 +62,7 @@ Window
             id: img
             width: phonebook.width
             height: phonebook.height
-            source: "qrc:/imagebackgroud/background.jpg"
+            source: "qrc:/imagebackgroud/index.jpg"
         }
        TabBar
         {
@@ -98,7 +98,7 @@ Window
 
             width: audio.width
             height: audio.height
-            source: "qrc:/imagebackgroud/background.jpg"
+            source: "qrc:/imagebackgroud/index.jpg"
         }
         ColumnLayout
         {
@@ -122,16 +122,9 @@ Window
             {
                 id: row
                 objectName: "row"
-
-                ToolButton
-                {
-
-                }
-                ToolButton
-                {
-
-                }
-
+                spacing: 100
+                anchors.margins: 20
+                //previous
                 ToolButton
                 {
 
@@ -139,72 +132,53 @@ Window
 
                 ToolButton
                 {
-                    id: previousButon
-                    tooltip: qsTr("previous")
-                    iconSource: "qrc:/imageaudio/previous-32.png"
+                    id: playingButon
+                    objectName: "playingButton"
+                    visible: false
+                    Layout.preferredWidth: previousButon.implicitHeight
+                    iconSource: "qrc:/imageaudio/media-pause-32.png"
                     onClicked:
                     {
-                        audioController.previous()
-                        console.log("previous")
+                       hMIEventController.HMIEvent("playing")
+                        console.log("playingClicked")
                     }
-
-                }
-                ToolButton
-                {
-                    id: seekButton
-                    objectName: "playPauseButton"
-                    Layout.preferredWidth: playPauseButton.implicitHeight
-                    iconSource: "qrc:/imageaudio/media-seek-forward-32.png"
-                    visible: false
-
-                }
-                ToolButton
-                {
-
                 }
 
+//play
                 ToolButton
                 {
-                    id: playPauseButton
-                    objectName: "playPauseButton"
-                    Layout.preferredWidth: playPauseButton.implicitHeight
+                    id: playButton
+                    objectName: "playButton"
+                    Layout.preferredWidth: playButton.implicitHeight
                     iconSource: "qrc:/imageaudio/media-play-32.png"
+                    visible: true
                     MouseArea
                     {
                         id: mouseArea
                         anchors.fill: parent
                         onClicked:
                         {
-                           hmiEventController.HMIEvent("play")
-                            console.log("playmusicClicked")
-                           // seekButton.visible =! seekButton.visible
+                           hMIEventController.HMIEvent("play")
+                            console.log("playMusicClicked")
                         }
-
                     }
-
                     Connections
                     {
-                        target: hmiEventController
+                        target: hMIEventController
                         onPlayed:
                         {
 
                             console.log("dang choi nhac ")
-                            seekButton.visible =! seekButton.visible
+                            playingButon.visible =! playingButon.visible
+                            playButton.visible=! playButton.visible
                         }
                     }
                 }
-                ToolButton
-                {
-
-                }
-                ToolButton
-                {
-
-                }
-
+//stop
                 ToolButton
                 {
                     id: stopButton
+                     objectName: "stopButton"
                     Layout.preferredWidth: stopButton.implicitHeight
                     iconSource: "qrc:/imageaudio/media-stop-32.png"
                     onClicked:
@@ -212,27 +186,40 @@ Window
                         hMIEventController.HMIEvent("stop")
 
                         console.log("StopMusicClicked")
+//                        stopButton.visible =! stopButton.visible
+                    }
+                    Connections
+                    {
+                        target: hMIEventController
+                        onStopped:
+                        {
+                            console.log("dang stop nhac ")
+                          playingButon.visible =! playingButon.visible
+                        }
                     }
                 }
+//next
                 ToolButton
                 {
-
-                }
-                ToolButton
-                {
-
-                }
-
-                ToolButton
-                {
+                    id:nextButton
                     tooltip: qsTr("Next")
                     iconSource: "qrc:/imageaudio/next-32.png"
                     onClicked:
                     {
-                        audioController.next()
-                        console.log("next")
+                        hMIEventController.HMIEvent("next")
+                        console.log("nextClicked")
+                    }
+                    Connections
+                    {
+                        target: hMIEventController
+                        onNexted:
+                        {
+                            console.log("dang next nhac ")
+                          playingButon.visible =! playingButon.visible
+                        }
                     }
                 }
+
 
 
             }
@@ -370,7 +357,7 @@ Window
         {
             width: climate.width
             height: climate.height
-            source: "qrc:/imagebackgroud/background.jpg"
+            source: "qrc:/imagebackgroud/index.jpg"
         }
         Component.onCompleted:
         {
@@ -406,7 +393,7 @@ Window
             id : background
             width : 640
             height: 480
-            source : "qrc:/imagebackgroud/background.jpg"
+            source : "qrc:/imagebackgroud/index.jpg"
 
             //Text icon
             // phone
@@ -561,7 +548,7 @@ Window
         height: 100
         Image {
             id: image
-            source: "qrc:/imagebackgroud/toolbar.jpg"
+            source: "qrc:/imagebackgroud/index.jpg"
             width: toolbar.width
             height: toolbar.height
         }

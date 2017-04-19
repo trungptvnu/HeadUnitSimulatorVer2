@@ -113,25 +113,25 @@ function parseWeatherData16Days(weatherData) {
 }
 
 /* 5 Days */
-function parseJSON5Days() {
-    var weatherAppKey = "f23961cb493d52dbd56fd0d656b3a396";
+//function parseJSON5Days() {
+//    var weatherAppKey = "f23961cb493d52dbd56fd0d656b3a396";
 
-    if (weatherAppKey != "") {
-        var xhr = new XMLHttpRequest;
-        xhr.open("GET", "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + weatherAppKey +
-                 "&cnt=16");
+//    if (weatherAppKey != "") {
+//        var xhr = new XMLHttpRequest;
+//        xhr.open("GET", "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + weatherAppKey +
+//                 "&cnt=16");
 
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                var a = JSON.parse(xhr.responseText);
-                parseWeatherData5Days(a);
-            }
-        }
-        xhr.send();
-    } else {
-        console.log("ERROR: No App Key")
-    }
-}
+//        xhr.onreadystatechange = function() {
+//            if (xhr.readyState === XMLHttpRequest.DONE) {
+//                var a = JSON.parse(xhr.responseText);
+//                parseWeatherData5Days(a);
+//            }
+//        }
+//        xhr.send();
+//    } else {
+//        console.log("ERROR: No App Key")
+//    }
+//}
 
 function parseWeatherData5Days(weatherData) {
 
