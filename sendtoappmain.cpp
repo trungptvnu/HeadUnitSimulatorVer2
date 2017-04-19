@@ -12,13 +12,10 @@ SendToAppMain::SendToAppMain()
 }
 
 
-void SendToAppMain::writeSharedMemory()
+void SendToAppMain::writeSharedMemory(QString event)
 {
-
     sharedMemory.setKey("server");
 
-    QString event = "Hello";
-    // load into shared memory
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);
     QDataStream out(&buffer);

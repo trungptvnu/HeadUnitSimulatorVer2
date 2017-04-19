@@ -17,11 +17,19 @@ void HMIEventController::HMIEvent(QString event )
 {
     if (event=="play")
     {
-        emit playMusic();
+        emit playMusic("play");
     }
-    if (event=="stop")
+    else if (event=="stop")
     {
-        emit stopMusic();
+        emit stopMusic("stop");
+    }
+   else if (event =="next")
+    {
+        emit nextMusic ("next");
+    }
+    else if (event =="add")
+    {
+        emit addMusic ("add");
     }
 }
 

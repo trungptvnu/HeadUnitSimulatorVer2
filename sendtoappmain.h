@@ -12,7 +12,7 @@ public:
     SendToAppMain();
 
 public slots:
-    void writeSharedMemory();
+    void writeSharedMemory(QString event);
 
 private:
     QSharedMemory sharedMemory;

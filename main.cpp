@@ -26,23 +26,27 @@ int main(int argc, char *argv[])
 
     QQuickView view;
     SendToAppMain sendToAppMain;
-    HMIEventController hmiEventController;
-    //HMIEventController hMIEventController2;
+    HMIEventController hMIEventController;
 
+    view.rootContext()->setContextProperty("hMIEventController",&hMIEventController);
 
-    view.rootContext()->setContextProperty("hmiEventController",&hmiEventController);
-    //view.rootContext()->setContextProperty("hMIEventController2",&hMIEventController2);
     view.setSource(QUrl("qrc:/main.qml"));
  // ket noi gui di
 
-    QObject::connect(&hmiEventController, HMIEventController::playMusic, &sendToAppMain, SendToAppMain::writeSharedMemory);
+    QObject::connect(&hMIEventController, SIGNAL(playMusic(QString)), &sendToAppMain, SLOT(writeSharedMemory(QString)));
+    QObject::connect(&hMIEventController, SIGNAL(stopMusic(QString)), &sendToAppMain, SLOT(writeSharedMemory(QString)));
+    QObject::connect(&hMIEventController, SIGNAL(nextMusic(QString)), &sendToAppMain, SLOT(writeSharedMemory(QString)));
+    QObject::connect(&hMIEventController, SIGNAL(addMusic(QString)), &sendToAppMain, SLOT(writeSharedMemory(QString)));
 
-
-  // ket noi gui ve
-
+  // ket noi gui ve voi HMI controller
     ReceiveFromAppMain receiveFromAppMain;
-    QObject::connect(&receiveFromAppMain,ReceiveFromAppMain::musicIsPlayed,&hmiEventController,HMIEventController::MusicSlot);
-    QObject::connect(&receiveFromAppMain,QThread::finished,&hmiEventController,QObject::deleteLater);
+    QObject::connect(&receiveFromAppMain,SIGNAL(musicIsPlayed(QString)),&hMIEventController,SLOT(AppMainEvent(QString)));
+    QObject::connect(&receiveFromAppMain,SIGNAL(musicIsStopped(QString)),&hMIEventController,SLOT(AppMainEvent(QString)));
+    QObject::connect(&receiveFromAppMain,SIGNAL(musicIsNexted(QString)),&hMIEventController,SLOT(AppMainEvent(QString)));
+    QObject::connect(&receiveFromAppMain,SIGNAL(musicIsAdded(QString)),&hMIEventController,SLOT(AppMainEvent(QString)));
+
+
+    QObject::connect(&receiveFromAppMain,QThread::finished,&hMIEventController,QObject::deleteLater);
     receiveFromAppMain.start();
     return app.exec();
 }

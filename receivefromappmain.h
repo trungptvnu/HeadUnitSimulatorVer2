@@ -21,7 +21,10 @@ public:
 
 //comunication
 signals:
-    void musicIsPlayed();
+    void musicIsPlayed(QString);
+    void musicIsStopped (QString);
+    void musicIsNexted (QString);
+    void musicIsAdded(QString);
 
  private:
 

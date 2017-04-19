@@ -35,18 +35,32 @@ void ReceiveFromAppMain::readSharedMemory()
     in >>string;
     sharedMemory.unlock();
 
-     if (string=="Hi")
+     if (string=="played")
      {
-         //comunication thread
-         emit musicIsPlayed();
+
+         emit musicIsPlayed("played");
          qDebug()   << "dang choi nhac";
+     }
+     else if (string=="stopped")
+     {
+
+         emit musicIsStopped("stopped");
+         qDebug()   << "stop";
+     }
+    else if (string=="nexted")
+     {
+         emit musicIsNexted("nexted");
+         qDebug()   << "next";
+     }
+     else if (string == "added")
+     {
+         emit musicIsAdded ("added");
+         qDebug() <<"add";
      }
      buffer.close();
 }
 void ReceiveFromAppMain::run()
 {
-
-
    while(1)
     {
       this ->readSharedMemory();
