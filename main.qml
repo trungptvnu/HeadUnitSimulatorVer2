@@ -129,8 +129,8 @@ Window
                 {
 
                 }
-
-                ToolButton
+//playing pause
+               ToolButton
                 {
                     id: playingButon
                     objectName: "playingButton"
@@ -139,7 +139,7 @@ Window
                     iconSource: "qrc:/imageaudio/media-pause-32.png"
                     onClicked:
                     {
-                       hMIEventController.HMIEvent("playing")
+                       hMIEventController.HMIEvent("pause")
                         console.log("playingClicked")
                     }
                 }
@@ -257,30 +257,44 @@ Window
                 }
                 RowLayout
                 {
+// add button
                     ToolButton
                     {
                         text: qsTr("Add music files")
                         iconSource: "qrc:/imageaudio/plus-32.png"
-                        onClicked: addingMusicDialog.open()
-
-                        FileDialog
+                        //onClicked: addingMusicDialog.open()
+                        onClicked:
                         {
-                            id: addingMusicDialog
-                            //folder : musicUrl
-                            title: qsTr("Open audio files")
-                            nameFilters: [qsTr("MP3 files (*.mp3)"), qsTr("All files (*.*)")]
-                            selectMultiple: true
-                            onAccepted:
+                            hMIEventController.HMIEvent("add")
+                            console.log("addClicked")
+                        }
+                        Connections
+                        {
+                            target: hMIEventController
+                            onAdded:
                             {
-                                var file_protocol = "file:///"
-                                for (var i = 0; i < fileUrls.length; i++)
-                                {
-                                    var path = fileUrls[i].toString()
-                                    path = path.substring(file_protocol.length, path.length)
-                                    playlistModel.append( { "path" : path, } )
-                                }
+                                console.log("adding music ")
+                              playingButon.visible =! playingButon.visible
                             }
                         }
+//                        FileDialog
+//                        {
+//                            id: addingMusicDialog
+//                            //folder : musicUrl
+//                            title: qsTr("Open audio files")
+//                            nameFilters: [qsTr("MP3 files (*.mp3)"), qsTr("All files (*.*)")]
+//                            selectMultiple: true
+//                            onAccepted:
+//                            {
+//                                var file_protocol = "file:///"
+//                                for (var i = 0; i < fileUrls.length; i++)
+//                                {
+//                                    var path = fileUrls[i].toString()
+//                                    path = path.substring(file_protocol.length, path.length)
+//                                    playlistModel.append( { "path" : path, } )
+//                                }
+//                            }
+//                        }
                     }
 
                 }
